@@ -15,6 +15,7 @@ namespace GUI
 
 	bool Label::IsSelectable() const
 	{
+		// Label cannot be selectable.
 		return false;
 	}
 

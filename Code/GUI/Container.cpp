@@ -12,7 +12,7 @@ namespace GUI
 		}
 	}
 
-	bool Container::HasSelection() const
+	bool Container::IsThereAnySelectedComponent() const
 	{
 		return selectedChildIndex >= 0;
 	}
@@ -21,7 +21,7 @@ namespace GUI
 	{
 		if (children[index]->IsSelectable())
 		{
-			if (HasSelection())
+			if (IsThereAnySelectedComponent())
 			{
 				children[selectedChildIndex]->Deselect();
 			}
@@ -33,7 +33,7 @@ namespace GUI
 
 	void Container::SelectNext()
 	{
-		if (!HasSelection())
+		if (!IsThereAnySelectedComponent())
 		{
 			return;
 		}
@@ -42,7 +42,7 @@ namespace GUI
 		int nextIndex = selectedChildIndex;
 		do
 		{
-			nextIndex = (nextIndex + 1) % children.size();
+			nextIndex = (nextIndex + 1) % (int)children.size();
 
 		} while (!children[nextIndex]->IsSelectable());
 
@@ -51,7 +51,7 @@ namespace GUI
 
 	void Container::SelectPrevious()
 	{
-		if (!HasSelection())
+		if (!IsThereAnySelectedComponent())
 		{
 			return;
 		}
@@ -71,7 +71,7 @@ namespace GUI
 	{
 		children.push_back(component);
 
-		if (!HasSelection() && component->IsSelectable())
+		if (!IsThereAnySelectedComponent() && component->IsSelectable())
 		{
 			Select(children.size() - 1);
 		}
@@ -79,12 +79,13 @@ namespace GUI
 
 	bool Container::IsSelectable() const
 	{
+		// Container cannot be selectable.
 		return false;
 	}
 
 	void Container::HandleEvent(const sf::Event& event)
 	{
-		if (HasSelection() && children[selectedChildIndex]->IsActive())
+		if (IsThereAnySelectedComponent() && children[selectedChildIndex]->IsActive())
 		{
 			children[selectedChildIndex]->HandleEvent(event);
 		}
@@ -100,7 +101,7 @@ namespace GUI
 			}
 			else if (event.key.code == sf::Keyboard::Return || event.key.code == sf::Keyboard::Space)
 			{
-				if (HasSelection())
+				if (IsThereAnySelectedComponent())
 				{
 					children[selectedChildIndex]->Activate();
 				}

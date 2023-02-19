@@ -26,7 +26,6 @@ MenuState::MenuState(StateStack& stack, State::Context context)
 	settingsButton->SetText("Settings");
 	auto settingsButtonCallback = [this]()
 	{
-		RequestStackPop();
 		RequestStackPush(States::ID::Settings);
 	};
 	settingsButton->SetCallback(settingsButtonCallback);
@@ -41,6 +40,7 @@ MenuState::MenuState(StateStack& stack, State::Context context)
 	};
 	exitButton->SetCallback(exitButtonCallback);
 
+	// Pack created buttons into the GUI container:
 	GUI_container.Pack(playButton);
 	GUI_container.Pack(settingsButton);
 	GUI_container.Pack(exitButton);

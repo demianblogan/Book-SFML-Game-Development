@@ -4,6 +4,8 @@
 
 namespace GUI
 {
+	// Container is GUI element that just contains other GUI elements.
+	// You can pack them into it and select the specific one if you want.
 	class Container : public Component
 	{
 	private:
@@ -12,15 +14,13 @@ namespace GUI
 
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-		bool HasSelection() const;
+		bool IsThereAnySelectedComponent() const;
 		void Select(size_t index);
 		void SelectNext();
 		void SelectPrevious();
 
 	public:
 		using Pointer = std::shared_ptr<Container>;
-
-		Container() = default;
 
 		void Pack(Component::Pointer component);
 		virtual bool IsSelectable() const;

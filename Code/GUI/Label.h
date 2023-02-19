@@ -5,6 +5,8 @@
 
 namespace GUI
 {
+
+	// Label is a class that represents GUI element Label. It has only text.
 	class Label : public Component
 	{
 	private:
@@ -19,6 +21,7 @@ namespace GUI
 	
 		virtual bool IsSelectable() const override;
 		void SetText(const std::string& text);
+
 		virtual void HandleEvent(const sf::Event& event) override;
 	};
 }

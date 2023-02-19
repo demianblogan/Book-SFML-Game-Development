@@ -1,5 +1,7 @@
 #include "SettingsState.h"
 
+#include "../Utilities/Utilities.h"
+
 void SettingsState::UpdateLabels()
 {
 	Player& player = *GetContext().player;
@@ -7,7 +9,7 @@ void SettingsState::UpdateLabels()
 	for (size_t i = 0; i < (size_t)Player::Action::ActionCount; i++)
 	{
 		sf::Keyboard::Key key = player.GetAssignedKey((Player::Action)i);
-		bindingLabels[i]->SetText(std::to_string(key));
+		bindingLabels[i]->SetText(ConvertToString(key));
 	}
 }
 

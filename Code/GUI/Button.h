@@ -6,6 +6,8 @@
 
 namespace GUI
 {
+	// Label is a class that represents GUI element Button. It has background sprite,
+	// foreground text, and callback function to call when clicking on it.
 	class Button : public Component
 	{
 	public:

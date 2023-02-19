@@ -7,6 +7,9 @@
 #include "../GUI/Container.h"
 #include "../GUI/Label.h"
 
+// SettingsState is a class that contains settings menu.
+// In the settings you'll see for buttons and their key bindings.
+// You can set any key to any action (aircraft movement action) you want.
 class SettingsState : public State
 {
 private:

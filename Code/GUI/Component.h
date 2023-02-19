@@ -4,6 +4,8 @@
 
 namespace GUI
 {
+	// Base class for every GUI elements. Every GUI element must be drawable, transformable
+	// selectable and activable. Also every GUI element can handle input event by itself.
 	class Component : public sf::Drawable, public sf::Transformable, private sf::NonCopyable
 	{
 	private:
@@ -13,7 +15,6 @@ namespace GUI
 	public:
 		using Pointer = std::shared_ptr<Component>;
 
-		Component() = default;
 		virtual ~Component();
 
 		virtual bool IsSelectable() const = 0;
@@ -24,6 +25,7 @@ namespace GUI
 		virtual bool IsActive() const;
 		virtual void Activate();
 		virtual void Deactivate();
+
 		virtual void HandleEvent(const sf::Event& event) = 0;
 	};
 }

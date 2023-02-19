@@ -3,6 +3,7 @@
 #include "../States/GameState.h"
 #include "../States/MenuState.h"
 #include "../States/PauseState.h"
+#include "../States/SettingsState.h"
 #include "../States/TitleState.h"
 #include "../Utilities/Utilities.h"
 
@@ -64,7 +65,7 @@ void Application::RegisterStates()
 	stateStack.RegisterState<MenuState>(States::ID::Menu);
 	stateStack.RegisterState<GameState>(States::ID::Game);
 	stateStack.RegisterState<PauseState>(States::ID::Pause);
-	stateStack.RegisterState<MenuState>(States::ID::Settings);
+	stateStack.RegisterState<SettingsState>(States::ID::Settings);
 }
 
 Application::Application()
