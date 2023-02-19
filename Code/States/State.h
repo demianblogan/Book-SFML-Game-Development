@@ -9,14 +9,15 @@ class Player;
 
 namespace States
 {
-	enum ID
+	enum class ID
 	{
 		None,
 		Title,
 		Menu,
 		Game,
 		Loading,
-		Pause
+		Pause,
+		Settings
 	};
 }
 

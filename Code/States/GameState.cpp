@@ -29,7 +29,7 @@ bool GameState::HandleEvent(const sf::Event& event)
 	player.HandleEvent(event, commands);
 
 	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-		RequestStackPush(States::Pause);
+		RequestStackPush(States::ID::Pause);
 
 	return true;
 }

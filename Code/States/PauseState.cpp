@@ -57,7 +57,7 @@ bool PauseState::HandleEvent(const sf::Event& event)
 	if (event.key.code == sf::Keyboard::BackSpace)
 	{
 		RequestStateClear();
-		RequestStackPush(States::Menu);
+		RequestStackPush(States::ID::Menu);
 	}
 
 	return false;

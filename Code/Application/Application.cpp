@@ -6,8 +6,8 @@
 #include "../States/TitleState.h"
 #include "../Utilities/Utilities.h"
 
-const sf::Time Application::TIME_PER_FRAME = sf::seconds(1.0f / 60.0f);
-const sf::String Application::WINDOW_TITLE = "States";
+const sf::Time Application::ONE_FRAME_DESIRED_DURATION = sf::seconds(1.0f / 60.0f);
+const sf::String Application::WINDOW_TITLE = "Menus";
 
 void Application::ProcessInput()
 {
@@ -60,10 +60,11 @@ void Application::Render()
 
 void Application::RegisterStates()
 {
-	stateStack.RegisterState<TitleState>(States::Title);
-	stateStack.RegisterState<MenuState>(States::Menu);
-	stateStack.RegisterState<GameState>(States::Game);
-	stateStack.RegisterState<PauseState>(States::Pause);
+	stateStack.RegisterState<TitleState>(States::ID::Title);
+	stateStack.RegisterState<MenuState>(States::ID::Menu);
+	stateStack.RegisterState<GameState>(States::ID::Game);
+	stateStack.RegisterState<PauseState>(States::ID::Pause);
+	stateStack.RegisterState<MenuState>(States::ID::Settings);
 }
 
 Application::Application()
@@ -72,19 +73,21 @@ Application::Application()
 {
 	window.setKeyRepeatEnabled(false);
 
+	// Load resources:
 	fontHolder.Load(Fonts::ID::Main, fontMainPath);
 	textureHolder.Load(Textures::ID::TitleScreen, textureTitleScreenPath);
+	textureHolder.Load(Textures::ID::ButtonNotSelected, textureButtonNotSelectedPath);
+	textureHolder.Load(Textures::ID::ButtonSelected, textureButtonSelectedPath);
+	textureHolder.Load(Textures::ID::ButtonPressed, textureButtonPressedPath);
 
 	// Set statistics text settings:
-	sf::Vector2f statTextPosition(5.0f, 5.0f);
-	unsigned int statTextSize = 10u;
 	statisticsText.setFont(fontHolder.Get(Fonts::ID::Main));
-	statisticsText.setPosition(statTextPosition);
-	statisticsText.setCharacterSize(statTextSize);
+	statisticsText.setPosition(5.0f, 5.0f);
+	statisticsText.setCharacterSize(10u);
 
 	// Game starts from Title Screen:
 	RegisterStates();
-	stateStack.PushState(States::Title);
+	stateStack.PushState(States::ID::Title);
 }
 
 void Application::Run()
@@ -94,19 +97,19 @@ void Application::Run()
 
 	while (window.isOpen())
 	{
-		// Game's delta time (time between frames) is a value of a constant "TIME_PER_FRAME".
+		// Game's delta time (time between frames) is a value of a constant "ONE_FRAME_DESIRED_DURATION".
 		// So we send this value to "Update" method every frame. But to make things work properly,
-		// we have to wait until game's working time has become greater than "TIME_PER_FRAME"
-		// and only after that we send "TIME_PER_FRAME" value to "Update" method. 
+		// we have to wait until game's working time has become greater than "ONE_FRAME_DESIRED_DURATION"
+		// and only after that we send "ONE_FRAME_DESIRED_DURATION" value to "Update" method. 
 		
 		sf::Time deltaTime = clock.restart();
 		timeSinceLastUpdate += deltaTime;
-		while (timeSinceLastUpdate > TIME_PER_FRAME)
+		while (timeSinceLastUpdate > ONE_FRAME_DESIRED_DURATION)
 		{
-			timeSinceLastUpdate -= TIME_PER_FRAME;
+			timeSinceLastUpdate -= ONE_FRAME_DESIRED_DURATION;
 
 			ProcessInput();
-			Update(TIME_PER_FRAME);
+			Update(ONE_FRAME_DESIRED_DURATION);
 
 			if (stateStack.IsEmpty())
 				window.close();

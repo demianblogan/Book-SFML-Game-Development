@@ -48,7 +48,7 @@ private:
 		Action action;
 		States::ID stateID;
 
-		explicit PendingChange(Action action, States::ID stateID = States::None);
+		explicit PendingChange(Action action, States::ID stateID = States::ID::None);
 	};
 
 	// We want to use stack's mechanism but std::stack has many restrictions. That's why

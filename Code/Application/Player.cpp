@@ -1,7 +1,7 @@
 #include "Player.h"
 
-#include "../SceneNodes/Aircraft.h"
 #include "../Commands/CommandQueue.h"
+#include "../SceneNodes/Aircraft.h"
 
 // Helping functor for moving an aircraft.
 struct AircraftMover

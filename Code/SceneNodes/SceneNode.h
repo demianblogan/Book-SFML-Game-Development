@@ -1,8 +1,8 @@
 #pragma once
 
 #include <memory>
-#include <vector>
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 struct Command;
 

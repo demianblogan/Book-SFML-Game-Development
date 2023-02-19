@@ -56,7 +56,7 @@ bool LoadingState::Update(sf::Time deltaTime)
 	if (loadingTask.IsFinished())
 	{
 		RequestStackPop();
-		RequestStackPush(States::Game);
+		RequestStackPush(States::ID::Game);
 	}
 	else
 	{

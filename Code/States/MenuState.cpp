@@ -1,60 +1,58 @@
 #include "MenuState.h"
 
 #include "../Utilities/Utilities.h"
+#include "../GUI/Button.h"
 
 MenuState::MenuState(StateStack& stack, State::Context context)
 	: State(stack, context)
 {
 	sf::Texture& texture = context.textureHolder->Get(Textures::ID::TitleScreen);
-	sf::Font& font = context.fontHolder->Get(Fonts::ID::Main);
-
 	backgroundSprite.setTexture(texture);
 
-	// Create an option "Play" and add it to the options:
-	sf::Text playOption;
-	playOption.setFont(font);
-	playOption.setString("Play");
-	CenterSFMLAssetOrigin(playOption);
-	playOption.setPosition(context.window->getView().getSize() / 2.0f);
-	options.push_back(playOption);
-
-	// Create an option "Exit" and add it to the options:
-	sf::Text exitOption;
-	exitOption.setFont(font);
-	exitOption.setString("Exit");
-	CenterSFMLAssetOrigin(exitOption);
-	exitOption.setPosition(playOption.getPosition() + sf::Vector2f(0, 30));
-	options.push_back(exitOption);
-
-	UpdateOptionText();
-}
-
-void MenuState::UpdateOptionText()
-{
-	if (options.empty())
+	// Create "Play" button:
+	auto playButton = std::make_shared<GUI::Button>(*context.fontHolder, *context.textureHolder);
+	playButton->setPosition(100, 250);
+	playButton->SetText("Play");
+	auto playButtonCallback = [this]()
 	{
-		return;
-	}
+		RequestStackPop();
+		RequestStackPush(States::ID::Game);
+	};
+	playButton->SetCallback(std::move(playButtonCallback));
 
-	for (sf::Text& text : options)
+	// Create "Settings" button:
+	auto settingsButton = std::make_shared<GUI::Button>(*context.fontHolder, *context.textureHolder);
+	settingsButton->setPosition(100, 300);
+	settingsButton->SetText("Settings");
+	auto settingsButtonCallback = [this]()
 	{
-		text.setFillColor(sf::Color::White);
-	}
+		RequestStackPop();
+		RequestStackPush(States::ID::Settings);
+	};
+	settingsButton->SetCallback(settingsButtonCallback);
 
-	options[optionIndex].setFillColor(sf::Color::Red);
+	// Create "Exit" button:
+	auto exitButton = std::make_shared<GUI::Button>(*context.fontHolder, *context.textureHolder);
+	exitButton->setPosition(100, 350);
+	exitButton->SetText("Exit");
+	auto exitButtonCallback = [this]()
+	{
+		RequestStackPop();
+	};
+	exitButton->SetCallback(exitButtonCallback);
+
+	GUI_container.Pack(playButton);
+	GUI_container.Pack(settingsButton);
+	GUI_container.Pack(exitButton);
 }
 
 void MenuState::Draw()
 {
 	sf::RenderWindow& window = *GetContext().window;
-
 	window.setView(window.getDefaultView());
-	window.draw(backgroundSprite);
 
-	for (const sf::Text& text : options)
-	{
-		window.draw(text);
-	}
+	window.draw(backgroundSprite);
+	window.draw(GUI_container);
 }
 
 bool MenuState::Update(sf::Time deltaTime)
@@ -64,49 +62,6 @@ bool MenuState::Update(sf::Time deltaTime)
 
 bool MenuState::HandleEvent(const sf::Event& event)
 {
-	if (event.type != sf::Event::KeyPressed)
-	{
-		return false;
-	}
-
-	if (event.key.code == sf::Keyboard::Return)
-	{
-		if (optionIndex == (size_t)OptionMame::Play)
-		{
-			RequestStackPop();
-			RequestStackPush(States::Game);
-		}
-		else if (optionIndex == (size_t)OptionMame::Exit)
-		{
-			RequestStackPop();
-		}
-	}
-	else if (event.key.code == sf::Keyboard::Up)
-	{
-		if (optionIndex > 0)
-		{
-			optionIndex--;
-		}
-		else
-		{
-			optionIndex = options.size() - 1;
-		}
-
-		UpdateOptionText();
-	}
-	else if (event.key.code == sf::Keyboard::Down)
-	{
-		if (optionIndex < options.size() - 1)
-		{
-			optionIndex++;
-		}
-		else
-		{
-			optionIndex = 0;
-		}
-
-		UpdateOptionText();
-	}
-
-	return true;
+	GUI_container.HandleEvent(event);
+	return false;
 }

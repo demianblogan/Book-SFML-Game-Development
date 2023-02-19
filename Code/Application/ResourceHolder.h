@@ -3,11 +3,13 @@
 #include <cassert>
 #include <map>
 #include <memory>
+#include <stdexcept>
 #include <string>
 
 namespace sf
 {
 	class Texture;
+	class Font;
 }
 
 namespace Textures
@@ -18,6 +20,9 @@ namespace Textures
 		Raptor,
 		Desert,
 		TitleScreen,
+		ButtonNotSelected,
+		ButtonSelected,
+		ButtonPressed,
 		None
 	};
 }

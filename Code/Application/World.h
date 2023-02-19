@@ -1,10 +1,10 @@
 #pragma once
 
 #include <array>
-#include "../SceneNodes/Aircraft.h"
-#include "../SceneNodes/SceneNode.h"
 #include "ResourceHolder.h"
 #include "../Commands/CommandQueue.h"
+#include "../SceneNodes/Aircraft.h"
+#include "../SceneNodes/SceneNode.h"
 
 // World is a class that represents the game world by itself:
 // it loads and holds resources (such as textures and fonts),

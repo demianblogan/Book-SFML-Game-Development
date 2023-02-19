@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Utilities/ParallelTask.h"
 #include "State.h"
+#include "../Utilities/ParallelTask.h"
 
 // LoadingState is a class that contains loading screen things:
 // loading text and progress bar.

@@ -1,6 +1,6 @@
 #include "StateStack.h"
 
-#include <assert.h>
+#include <cassert>
 
 StateStack::PendingChange::PendingChange(Action action, States::ID stateID)
 	: action(action), stateID(stateID)
